@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Preference
+            android:key="btnInstall"
+            android:title="@string/install_title"/-->
+    <Preference
+            android:key="btnStart"
+            android:title="@string/start_title"/>
+    <CheckBoxPreference
+            android:key="autostart"
+            android:title="@string/autostart_title"
+            android:summary="@string/autostart_summary"
+            android:defaultValue="true">
+    </CheckBoxPreference>
+    <CheckBoxPreference
+            android:key="forcestart"
+            android:title="@string/forcestart_title"
+            android:summary="@string/forcestart_summary"
+            android:defaultValue="false">
+    </CheckBoxPreference>
+    <ListPreference
+            android:key="forcestart_delay"
+            android:title="@string/forcestart_delay_title"
+            android:dependency="forcestart"
+            android:entries="@array/forcestart_delay"
+            android:entryValues="@array/forcestart_delay_values"
+            android:defaultValue="5000">
+    </ListPreference>
+</PreferenceScreen>

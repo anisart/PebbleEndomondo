@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:description="@string/service_description"
+        android:packageNames="com.endomondo.android, com.endomondo.android.pro"
+        android:accessibilityEventTypes="typeNotificationStateChanged"
+        android:accessibilityFlags="flagDefault"
+        android:accessibilityFeedbackType="feedbackVisual"
+        android:settingsActivity=".MainActivity"
+/>
