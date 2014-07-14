@@ -2,12 +2,13 @@
 <resources>
     <string name="app_name">Pebble Endomondo</string>
 
-    <string name="install_title">Install watchapp</string>
+    <string name="install_title">Install watchapp from Pebble Store</string>
     <string name="start_title">Start watchapp</string>
     <string name="toast_start">Watchapp are started!</string>
     <string name="toast_no_conn">Pebble is not connected!</string>
-    <string name="dialog_title">Service not running</string>
-    <string name="dialog_message">Accesibility service is not running. You must enable it to get this app to work!</string>
+    <string name="dialog_title">Service is not running</string>
+    <string name="dialog_message_accessibility">Accesibility service is not running. You must enable it to get this app to work!</string>
+    <string name="dialog_message_notification">Notification service is not running. You must enable it to get this app to work!</string>
     <string name="dialog_positive">Open Settings</string>
     <string name="dialog_negative">Cancel</string>
 
@@ -32,4 +33,11 @@
 
     <string name="service_description">Pebble Endomondo\'s accessibility service is required to capture status of
         Endomondo workout from statusbar.</string>
+
+    <string name="note"> NOTE: Watchapp is working only if Endomondo app is running in background or phone is locked.</string>
+    <string name="category_1">Settings</string>
+    <string name="category_2">Requirements</string>
+
+    <!-- parser hack -->
+    <string name="no_notification_text">": Endomondo\n\n: on sreen\n\n: or has been\n\n: closed "</string>
 </resources>

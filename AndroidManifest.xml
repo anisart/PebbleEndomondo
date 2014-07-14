@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ru.anisart.pebble.endomondo"
-          android:versionCode="4"
-          android:versionName="1.0">
+          android:versionCode="5"
+          android:versionName="1.1">
     <uses-sdk android:minSdkVersion="14"
               android:targetSdkVersion="19"/>
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".PebbleEndomondoService"
+        <service android:name=".AccessibilityPebbleEndomondoService"
                  android:label="@string/app_name"
+                 android:enabled="@bool/useAccessibilityServise"
                  android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
@@ -26,6 +27,14 @@
             <meta-data
                     android:name="android.accessibilityservice"
                     android:resource="@xml/accessibility_service_config"/>
+        </service>
+        <service android:name=".NotificationPebbleEndomondoService"
+                 android:label="@string/app_name"
+                 android:enabled="@bool/useNotificationListener"
+                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
         </service>
     </application>
 </manifest>

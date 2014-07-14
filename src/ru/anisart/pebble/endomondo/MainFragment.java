@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -15,6 +16,7 @@ public class MainFragment extends PreferenceFragment {
 
     private final static String PREF_START_BUTTON = "btnStart";
     private final static String PREF_FORCESTART_DELAY = "forcestart_delay";
+    private final static String PREF_INSTALL_BUTTON = "btnInstall";
     private Context context;
 
     @Override
@@ -28,7 +30,7 @@ public class MainFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (PebbleKit.isWatchConnected(context)) {
-                    PebbleKit.startAppOnPebble(context, PebbleEndomondoService.PEBBLE_APP_UUID);
+                    PebbleKit.startAppOnPebble(context, NotificationHandler.PEBBLE_APP_UUID);
                     Toast.makeText(context, R.string.toast_start, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, R.string.toast_no_conn, Toast.LENGTH_SHORT).show();
@@ -48,23 +50,43 @@ public class MainFragment extends PreferenceFragment {
                 return true;
             }
         });
+
+        Preference installButton = (Preference) findPreference(PREF_INSTALL_BUTTON);
+        installButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("pebble://appstore/53b87838f92e8fe592000077"));
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (!PebbleEndomondoService.isActive()) {
+        if (!NotificationHandler.isActive()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.dialog_title).
-                    setMessage(R.string.dialog_message).
-                    setNegativeButton(R.string.dialog_negative, null).
-                    setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
-                        }
-                    }).
-                    create().
+                    setNegativeButton(R.string.dialog_negative, null);
+            if (NotificationHandler.isNotificationListenerSupported()) {
+                builder.setMessage(R.string.dialog_message_notification).
+                        setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                            }
+                        });
+            } else {
+                builder.setMessage(R.string.dialog_message_accessibility).
+                        setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                            }
+                        });
+            }
+            builder.create().
                     show();
         }
     }
